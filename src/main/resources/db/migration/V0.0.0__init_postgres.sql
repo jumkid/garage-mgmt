@@ -1,15 +1,18 @@
 CREATE TABLE IF NOT EXISTS garage_profile (
-  garage_id SERIAL PRIMARY KEY,
-  display_name VARCHAR(100) NOT NULL ,
-  legal_name VARCHAR(255) NOT NULL ,
-  description TEXT,
-  website TEXT
+    garage_id SERIAL PRIMARY KEY,
+    display_name VARCHAR(100) NOT NULL ,
+    legal_name VARCHAR(255) NOT NULL ,
+    description TEXT,
+    website TEXT,
+
+    created_on TIMESTAMP NOT NULL,
+    created_by VARCHAR(100) NOT NULL,
+    modified_on TIMESTAMP,
+    modified_by VARCHAR(100)
 );
-CREATE INDEX IF NOT EXISTS garage_profile_idx ON garage_profile (
-    display_name,
-    legal_name,
-    lower(website)
-    );
+CREATE INDEX IF NOT EXISTS garage_profile_display_name_idx ON garage_profile (
+    display_name
+);
 
 CREATE TABLE IF NOT EXISTS mechanic_profile (
     mechanic_profile_id SERIAL PRIMARY KEY ,
@@ -20,28 +23,13 @@ CREATE TABLE IF NOT EXISTS mechanic_profile (
     phone_number VARCHAR(20),
     email VARCHAR(255),
     specialty TEXT,
-    CONSTRAINT fk_garage_id FOREIGN KEY (garage_id) REFERENCES garage_profile(garage_id)
-);
-CREATE INDEX IF NOT EXISTS mechanic_profile_idx ON mechanic_profile (
-    firstname,
-    lastname,
-    phone_number,
-    lower(email)
-);
 
-CREATE TABLE IF NOT EXISTS garage_service_time (
-    garage_service_time_id SERIAL PRIMARY KEY ,
-    garage_id INTEGER NOT NULL ,
-    weekday VARCHAR(10) ,
-    specific_date DATE,
-    time_from TIME,
-    time_to TIME,
-    available BOOLEAN NOT NULL,
+    created_on TIMESTAMP NOT NULL,
+    created_by VARCHAR(100) NOT NULL,
+    modified_on TIMESTAMP,
+    modified_by VARCHAR(100),
+
     CONSTRAINT fk_garage_id FOREIGN KEY (garage_id) REFERENCES garage_profile(garage_id)
-);
-CREATE INDEX IF NOT EXISTS garage_service_time_idx ON garage_service_time (
-    weekday,
-    specific_date
 );
 
 CREATE TABLE IF NOT EXISTS garage_location (
@@ -55,14 +43,30 @@ CREATE TABLE IF NOT EXISTS garage_location (
     postal_code VARCHAR (20) ,
     phone_number VARCHAR(50) ,
     fax VARCHAR(30) ,
-    geog GEOGRAPHY ,
+    geom GEOMETRY ,
+
+    created_on TIMESTAMP NOT NULL,
+    created_by VARCHAR(100) NOT NULL,
+    modified_on TIMESTAMP,
+    modified_by VARCHAR(100),
+
     CONSTRAINT fk_garage_id FOREIGN KEY (garage_id) REFERENCES garage_profile(garage_id)
 );
-CREATE INDEX IF NOT EXISTS garage_location_idx ON garage_location (
-    address_line_1,
-    address_line_2,
-    city,
-    province,
-    postal_code
+CREATE INDEX IF NOT EXISTS garage_location_geom_idx ON garage_location USING gist(geom);
+
+CREATE TABLE IF NOT EXISTS garage_service_time (
+    garage_service_time_id SERIAL PRIMARY KEY ,
+    garage_location_id INTEGER NOT NULL ,
+    weekday int,
+    specific_date DATE,
+    time_from TIME,
+    time_to TIME,
+    available BOOLEAN NOT NULL,
+
+    created_on TIMESTAMP NOT NULL,
+    created_by VARCHAR(100) NOT NULL,
+    modified_on TIMESTAMP,
+    modified_by VARCHAR(100),
+
+    CONSTRAINT fk_garage_location_id FOREIGN KEY (garage_location_id) REFERENCES garage_location(garage_location_id)
 );
-CREATE INDEX IF NOT EXISTS garage_location_geog_idx ON garage_location USING gist(geog);
