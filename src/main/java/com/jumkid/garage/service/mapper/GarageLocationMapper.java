@@ -12,11 +12,11 @@ import org.springframework.data.geo.Point;
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
         uses = {GarageServiceTimeMapper.class})
 public interface GarageLocationMapper {
+
     @Mapping(target = "garageProfileId", source = "entity.garageProfileEntity.id")
-    @Mapping(target = "modificationDate", source = "entity.modifiedOn")
     @Mapping(target = "point", source = "entity.geom", qualifiedBy = GeomToPointMapper.class)
     GarageLocation entityToDTO(GarageLocationEntity entity);
-    @Mapping(target = "modifiedOn", source = "dto.modificationDate")
+
     GarageLocationEntity dtoToEntity(GarageLocation dto);
 
     @GeomToPointMapper

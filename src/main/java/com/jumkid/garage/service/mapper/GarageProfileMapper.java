@@ -11,10 +11,8 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
         uses = {GarageLocationMapper.class})
 public interface GarageProfileMapper {
 
-    @Mapping(target = "modificationDate", source = "entity.modifiedOn")
     @Mapping(target = "garageLocations", source = "entity.garageLocationEntityList")
     GarageProfile entityToDTO(GarageProfileEntity entity);
 
-    @Mapping(target = "modifiedOn", source = "dto.modificationDate")
     GarageProfileEntity dtoToEntity(GarageProfile dto);
 }

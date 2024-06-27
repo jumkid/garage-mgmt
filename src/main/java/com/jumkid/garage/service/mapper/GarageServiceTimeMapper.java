@@ -8,8 +8,6 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 
 @Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface GarageServiceTimeMapper {
-    @Mapping(target = "modificationDate", source = "entity.modifiedOn")
     GarageServiceTime entityToDTO(GarageServiceTimeEntity entity);
-    @Mapping(target = "modifiedOn", source = "dto.modificationDate")
     GarageServiceTimeEntity dtoToEntity(GarageServiceTime dto);
 }
