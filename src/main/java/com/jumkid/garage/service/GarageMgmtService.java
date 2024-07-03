@@ -1,5 +1,6 @@
 package com.jumkid.garage.service;
 
+import com.jumkid.garage.exception.GarageProfileDuplicateDisplayNameException;
 import com.jumkid.garage.service.dto.GarageProfile;
 import com.jumkid.garage.exception.GarageProfileNotFoundException;
 
@@ -14,10 +15,10 @@ public interface GarageMgmtService {
     GarageProfile getGarageProfile(Long garageId) throws GarageProfileNotFoundException;
 
     /**
-     * Save new garage profile
+     * Add new garage profile
      *
      * @param garageProfile
      * @return GarageProfile
      */
-    GarageProfile saveGarageProfile(GarageProfile garageProfile);
+    GarageProfile addGarageProfile(GarageProfile garageProfile) throws GarageProfileDuplicateDisplayNameException;
 }

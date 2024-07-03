@@ -2,6 +2,7 @@ package com.jumkid.garage.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.jumkid.share.service.dto.GenericDTO;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -21,10 +22,12 @@ public class GarageProfile extends GenericDTO {
     @Size(max = 255)
     private String displayName;
 
+    @Size(max = 255)
     private String legalName;
 
     private String description;
 
+    @Size(min = 3, max = 255)
     private String website;
 
     private List<GarageLocation> garageLocations;

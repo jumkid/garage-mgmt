@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.jumkid.share.service.dto.GenericDTO;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,8 +42,10 @@ public class GarageLocation extends GenericDTO {
 
     private String postalCode;
 
+    @Pattern( regexp = "^[0-9]+[-()\s].[0-9]+\\$" )
     private String phoneNumber;
 
+    @Pattern( regexp = "^[0-9]+[-()\s].[0-9]+\\$" )
     private String fax;
 
     private Point point;

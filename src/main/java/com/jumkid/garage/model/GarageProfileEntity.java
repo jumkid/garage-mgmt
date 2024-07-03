@@ -15,7 +15,8 @@ public class GarageProfileEntity extends GenericEntity{
 
     @Id
     @Column(name = "garage_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "garage_id_seq")
+    @SequenceGenerator(name = "garage_id_seq", sequenceName = "garage_profile_garage_id_seq", allocationSize = 1)
     private Long id;
 
     @Column(name = "display_name")
@@ -30,7 +31,7 @@ public class GarageProfileEntity extends GenericEntity{
     @Column(name = "website")
     private String website;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "garage_id")
     private List<GarageLocationEntity> garageLocationEntityList;
 

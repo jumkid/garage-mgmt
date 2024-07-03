@@ -15,12 +15,10 @@ public class GarageLocationEntity extends GenericEntity {
 
     @Id
     @Column(name = "garage_location_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "garage_location_id_seq")
+    @SequenceGenerator(name = "garage_location_id_seq",
+            sequenceName = "garage_location_garage_location_id_seq", allocationSize = 1)
     private Long id;
-
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "garage_id")
-    private GarageProfileEntity garageProfileEntity;
 
     @Column(name = "address_line_1")
     private String addressLineOne;
@@ -48,6 +46,10 @@ public class GarageLocationEntity extends GenericEntity {
 
     @Column(name = "geom", columnDefinition = "Geometry")
     private Geometry geom;
+
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "garage_id")
+    private GarageProfileEntity garageProfileEntity;
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "garage_location_id")
