@@ -9,6 +9,6 @@ public class GarageProfileDuplicateDisplayNameException extends Exception{
     }
 
     public GarageProfileDuplicateDisplayNameException(String displayName) {
-        super(String.format("Display name \"%s\" is already taken", displayName));
+        super(String.format("Display name '%s' is already taken", displayName));
     }
 }

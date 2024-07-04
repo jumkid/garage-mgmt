@@ -160,6 +160,24 @@ class GarageProfileAPITests {
 					.statusCode(HttpStatus.CONFLICT.value());
 	}
 
+	@ParameterizedTest
+	@DisplayName("Save garage profile without display name - Bad Request")
+	@Order(13)
+	@ArgumentsSource(GarageProfileArgumentsProvider.class)
+	void whenGivenGarageProfileWithoutDisplayName_shouldGet400(GarageProfile garageProfile) {
+		garageProfile.setDisplayName(null);
+		RestAssured
+				.given()
+				.baseUri("http://localhost:" + port)
+				.headers("Authorization", "Bearer " + testUserToken)
+				.body(garageProfile)
+				.contentType(ContentType.JSON)
+				.when()
+				.post("/garages")
+				.then()
+				.statusCode(HttpStatus.CONFLICT.value());
+	}
+
 	@AfterAll
 	static void cleanUp() {
 		//void
