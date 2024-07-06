@@ -1,5 +1,6 @@
 package com.jumkid.garage;
 
+import com.jumkid.garage.config.TestContainerConfig;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.lang.annotation.ElementType;

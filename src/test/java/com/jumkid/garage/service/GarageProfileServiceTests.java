@@ -1,6 +1,6 @@
 package com.jumkid.garage.service;
 
-import com.jumkid.garage.GarageProfileArgumentsProvider;
+import com.jumkid.garage.config.TestObjectsProperties;
 import com.jumkid.garage.exception.GarageProfileDuplicateDisplayNameException;
 import com.jumkid.garage.exception.GarageProfileNotFoundException;
 import com.jumkid.garage.model.GarageProfileEntity;
@@ -55,11 +55,11 @@ class GarageProfileServiceTests {
     private GarageMgmtService garageMgmtService;
 
     @Autowired
-    private GarageProfileArgumentsProvider garageProfileArgumentsProvider;
+    private TestObjectsProperties testObjectsProperties;
 
     @BeforeAll
     void setup() {
-        garageProfile = garageProfileArgumentsProvider.getSampleGarageProfile();
+        garageProfile = testObjectsProperties.getGarageProfile();
         garageProfileEntity = garageProfileMapper.dtoToEntity(garageProfile, new GarageProfileEntity(), mapperContext);
 
         garageMgmtService = new GarageMgmtServiceImpl(garageProfileRepository, garageProfileMapper, mapperContext, dtoHandler);

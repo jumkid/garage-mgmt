@@ -1,4 +1,4 @@
-package com.jumkid.garage;
+package com.jumkid.garage.config;
 
 import org.junit.jupiter.api.DisplayName;
 import org.springframework.boot.test.util.TestPropertyValues;

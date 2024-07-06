@@ -1,0 +1,23 @@
+test-data:
+  clientId: "garage-mgmt"
+  name: "garage management service test data"
+  version: 0.0.1
+  garageProfile:
+    id: null
+    displayName: "ABB"
+    legalName: "ABB Garage Shop"
+    description: "a test garage profile"
+    website: "www.abb.ca"
+    garageLocations:
+      - addressLineOne: "1 Hurontario"
+        addressLineTwo: "unit 1113"
+        city: "mississauga"
+        province: "ontario"
+        country: "canada"
+        postalCode: "L5R4A8"
+        phoneNumber": "+1 6475282268"
+        fax: "(637)432-6654"
+        coordinate:
+          x: 10
+          y: -10
+          m: 0

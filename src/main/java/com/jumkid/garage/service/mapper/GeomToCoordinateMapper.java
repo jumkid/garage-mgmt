@@ -10,5 +10,5 @@ import java.lang.annotation.Target;
 @Qualifier
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.CLASS)
-public @interface PointToGeomMapper {
+public @interface GeomToCoordinateMapper {
 }
