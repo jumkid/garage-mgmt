@@ -1,4 +1,4 @@
-package com.jumkid.garage;
+package com.jumkid.garage.config;
 
 import com.jumkid.garage.config.TestContainerConfig;
 import org.springframework.test.context.ContextConfiguration;

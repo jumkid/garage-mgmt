@@ -8,9 +8,11 @@ import com.jumkid.garage.service.handler.DTOHandler;
 import com.jumkid.garage.service.mapper.GarageProfileMapper;
 import com.jumkid.garage.repository.GarageProfileRepository;
 import com.jumkid.garage.service.mapper.MapperContext;
-import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -34,13 +36,14 @@ public class GarageMgmtServiceImpl implements GarageMgmtService{
 
     @Override
     public GarageProfile getGarageProfile(Long garageId) throws GarageProfileNotFoundException {
-        GarageProfileEntity entity = garageProfileRepository.findById(garageId).orElseThrow(() -> new GarageProfileNotFoundException(garageId));
-
+        GarageProfileEntity entity = garageProfileRepository.findById(garageId)
+                .orElseThrow(() -> new GarageProfileNotFoundException(garageId));
+        log.debug("Fetched garage profile [id:{}].", garageId);
         return garageProfileMapper.entityToDTO(entity, mapperContext);
     }
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public GarageProfile addGarageProfile(GarageProfile garageProfile) throws GarageProfileDuplicateDisplayNameException {
         String displayName = garageProfile.getDisplayName();
         if (garageProfileRepository.findByDisplayName(displayName).isPresent()) {
@@ -54,5 +57,31 @@ public class GarageMgmtServiceImpl implements GarageMgmtService{
         log.info("new garage profile is created. id [{}]", newEntity.getId());
 
         return garageProfileMapper.entityToDTO(newEntity, mapperContext);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public GarageProfile updateGarageProfile(Long garageProfileId, GarageProfile partialGarageProfile)
+            throws GarageProfileNotFoundException, GarageProfileDuplicateDisplayNameException {
+        GarageProfileEntity oldEntity = garageProfileRepository.findById(garageProfileId)
+                .orElseThrow(() -> new GarageProfileNotFoundException(garageProfileId));
+
+        dtoHandler.normalize(garageProfileId, partialGarageProfile, oldEntity);
+
+        garageProfileMapper.updateEntityFromDto(partialGarageProfile, oldEntity, mapperContext);
+
+        GarageProfileEntity updatedEntity = garageProfileRepository.save(oldEntity);
+        log.info("Updated garage profile [id:{}] successfully", garageProfileId);
+
+        return garageProfileMapper.entityToDTO(updatedEntity, mapperContext);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.REPEATABLE_READ)
+    public void deleteGarageProfile(Long garageProfileId) throws GarageProfileNotFoundException {
+        GarageProfileEntity garageProfileEntity = garageProfileRepository.findById(garageProfileId)
+                                    .orElseThrow(() -> new GarageProfileNotFoundException(garageProfileId));
+        garageProfileRepository.delete(garageProfileEntity);
+        log.info("Garage profile [id: {}] is deleted", garageProfileId);
     }
 }

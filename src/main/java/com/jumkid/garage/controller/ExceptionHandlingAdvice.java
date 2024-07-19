@@ -3,6 +3,7 @@ package com.jumkid.garage.controller;
 import com.jumkid.garage.exception.GarageProfileDuplicateDisplayNameException;
 import com.jumkid.garage.exception.GarageProfileNotFoundException;
 import com.jumkid.share.controller.response.CustomErrorResponse;
+import com.jumkid.share.exception.ModificationDatetimeOutdatedException;
 import com.jumkid.share.security.exception.UserProfileNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -26,6 +27,13 @@ import static org.springframework.http.HttpStatus.*;
 @Slf4j
 @RestControllerAdvice
 public class ExceptionHandlingAdvice {
+
+    @ExceptionHandler(ModificationDatetimeOutdatedException.class)
+    @ResponseStatus(CONFLICT)
+    public CustomErrorResponse handleMethodArgumentNotValidException(ModificationDatetimeOutdatedException ex) {
+        log.warn("The target data has been updated. Please fetch the latest version of the data", ex);
+        return new CustomErrorResponse(Calendar.getInstance().getTime(), ex.getMessage());
+    }
 
     @ExceptionHandler({UserProfileNotFoundException.class, AccessDeniedException.class})
     @ResponseStatus(FORBIDDEN)
@@ -86,6 +94,8 @@ public class ExceptionHandlingAdvice {
     @ExceptionHandler({Exception.class})
     @ResponseStatus(INTERNAL_SERVER_ERROR)
     public CustomErrorResponse handle(Exception ex) {
+        log.error(ex.getMessage());
+
         return CustomErrorResponse.builder()
                 .timestamp(getCurrentTime())
                 .message("Oops! Backend system failed to process the request. Please contact system admin")

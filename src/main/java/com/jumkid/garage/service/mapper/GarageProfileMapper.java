@@ -24,4 +24,7 @@ public interface GarageProfileMapper {
 
     @Mapping(target = "garageLocationEntityList", source = "dto.garageLocations")
     GarageProfileEntity dtoToEntity(GarageProfile dto, @MappingTarget GarageProfileEntity entity, @Context MapperContext ctx);
+
+    @Mapping(target = "garageLocationEntityList", source = "partialDto.garageLocations")
+    void updateEntityFromDto(GarageProfile partialDto, @MappingTarget GarageProfileEntity updateEntity, @Context MapperContext ctx);
 }

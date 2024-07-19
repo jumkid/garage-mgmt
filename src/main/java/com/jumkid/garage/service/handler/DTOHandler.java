@@ -27,15 +27,17 @@ public class DTOHandler extends GenericDTOHandler{
 
         if (dto.getGarageLocations() != null) {
             for (GarageLocation garageLocation : dto.getGarageLocations()) {
-                GarageLocationEntity entity = null;
+                GarageLocationEntity garageLocationEntity = null;
                 if (oldEntity != null) {
-                    entity = oldEntity.getGarageLocationEntityList().stream()
-                            .filter(garageLocationEntity -> garageLocationEntity.getId().equals(garageLocation.getId()))
+                    garageLocationEntity = oldEntity.getGarageLocationEntityList().stream()
+                            .filter(entity -> (entity.getId() == null && garageLocation.getId() == null) ||
+                                    entity.getId().equals(garageLocation.getId()))
                             .findAny()
                             .orElse(null);
-                }
 
-                super.normalizeOwnership(garageLocation, entity);
+                    garageLocation.setGarageProfileId(oldEntity.getId());
+                }
+                super.normalizeOwnership(garageLocation, garageLocationEntity);
             }
         }
     }

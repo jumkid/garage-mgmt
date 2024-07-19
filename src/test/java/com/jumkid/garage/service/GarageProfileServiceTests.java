@@ -89,14 +89,28 @@ class GarageProfileServiceTests {
                 .thenReturn(UserProfile.builder().id(UUID.randomUUID().toString()).build());
         when(garageProfileRepository.save(any())).thenReturn(garageProfileEntity);
 
-        GarageProfile newGarageProfile = garageMgmtService.addGarageProfile(this.garageProfile);
+        GarageProfile newGarageProfile = garageMgmtService.addGarageProfile(garageProfile);
 
         assertNotNull(newGarageProfile);
         assertEquals(garageProfileEntity.getId(), newGarageProfile.getId());
     }
 
     @Test
-    void shouldUpdateGarageProfile() {
-        fail();
+    void shouldUpdateGarageProfile() throws GarageProfileNotFoundException, GarageProfileDuplicateDisplayNameException {
+        long garageProfileId = 1L;
+        garageProfileEntity.setId(garageProfileId);
+        garageProfileEntity.setModifiedOn(garageProfile.getModifiedOn());
+        garageProfileEntity.getGarageLocationEntityList()
+                .get(0).setModifiedOn(garageProfile.getGarageLocations().get(0).getModifiedOn());
+
+        when(userProfileManager.fetchUserProfile())
+                .thenReturn(UserProfile.builder().id(UUID.randomUUID().toString()).build());
+        when(garageProfileRepository.findById(garageProfileId)).thenReturn(Optional.of(garageProfileEntity));
+        when(garageProfileRepository.save(any())).thenReturn(garageProfileEntity);
+
+        GarageProfile updateGarageProfile = garageMgmtService.updateGarageProfile(garageProfileId, garageProfile);
+
+        assertNotNull(updateGarageProfile);
+        assertEquals(garageProfileEntity.getId(), updateGarageProfile.getId());
     }
 }

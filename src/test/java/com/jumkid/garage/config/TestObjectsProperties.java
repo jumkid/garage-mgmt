@@ -6,6 +6,8 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.test.context.TestPropertySource;
 
+import java.util.List;
+
 @ConfigurationProperties(prefix = "test-data")
 @TestPropertySource(value = "classpath:application.yml")
 @Getter @Setter
@@ -18,5 +20,7 @@ public class TestObjectsProperties {
     String version;
 
     GarageProfile garageProfile;
+
+    List<GarageProfile> partialGarageProfiles;
 
 }

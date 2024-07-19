@@ -12,7 +12,8 @@ public class MechanicProfileEntity extends GenericEntity {
 
     @Id
     @Column(name = "mechanic_profile_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mechanic_profile_id_seq")
+    @SequenceGenerator(name = "mechanic_profile_id_seq", sequenceName = "mechanic_profile_mechanic_profile_id_seq", allocationSize = 1)
     private Long id;
 
     @OneToOne(fetch = FetchType.EAGER)

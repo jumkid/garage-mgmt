@@ -2,11 +2,9 @@ package com.jumkid.garage.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.jumkid.share.service.dto.GenericDTO;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;

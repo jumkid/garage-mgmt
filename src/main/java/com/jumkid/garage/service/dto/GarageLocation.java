@@ -38,11 +38,11 @@ public class GarageLocation extends GenericDTO {
 
     private String postalCode;
 
-    @Pattern(regexp = "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$",
+    @Pattern(regexp = "^(\\+\\d{1,2}\\s?)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$",
             message = "Invalid phone number. It must contains only digits, +, -, (, ), dot and space.")
     private String phoneNumber;
 
-    @Pattern( regexp = "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$",
+    @Pattern( regexp = "^(\\+\\d{1,2}\\s?)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$",
             message = "Invalid phone number. It must contains only digits, +, -, (, ), dot and space." )
     private String fax;
 

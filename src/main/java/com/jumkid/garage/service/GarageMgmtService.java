@@ -21,4 +21,22 @@ public interface GarageMgmtService {
      * @return GarageProfile
      */
     GarageProfile addGarageProfile(GarageProfile garageProfile) throws GarageProfileDuplicateDisplayNameException;
+
+    /**
+     * update garage profile
+     *
+     * @param partialGarageProfile
+     * @return
+     * @throws GarageProfileDuplicateDisplayNameException
+     */
+    GarageProfile updateGarageProfile(Long garageProfileId, GarageProfile partialGarageProfile)
+            throws GarageProfileNotFoundException, GarageProfileDuplicateDisplayNameException;
+
+    /**
+     * delete garage profile
+     *
+     * @param garageProfileId
+     * @throws GarageProfileNotFoundException
+     */
+    void deleteGarageProfile(Long garageProfileId) throws GarageProfileNotFoundException;
 }

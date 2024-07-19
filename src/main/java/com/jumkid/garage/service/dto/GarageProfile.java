@@ -23,7 +23,6 @@ public class GarageProfile extends GenericDTO {
     @Size(max = 255)
     private String legalName;
 
-    @Size(max = 255)
     private String description;
 
     @Size(min = 3, max = 255)

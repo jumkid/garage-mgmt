@@ -31,4 +31,20 @@ public class GarageProfileController {
     public GarageProfile save(@Valid @RequestBody GarageProfile garageProfile) throws GarageProfileDuplicateDisplayNameException {
         return garageMgmtService.addGarageProfile(garageProfile);
     }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PreAuthorize("hasAnyAuthority('USER_ROLE', 'ADMIN_ROLE') && @accessAuthorizer.isOwner(#id)")
+    public GarageProfile update(@PathVariable Long id, @RequestBody GarageProfile partialGarageProfile)
+            throws GarageProfileNotFoundException, GarageProfileDuplicateDisplayNameException {
+        return garageMgmtService.updateGarageProfile(id, partialGarageProfile);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAnyAuthority('USER_ROLE', 'ADMIN_ROLE') && @accessAuthorizer.isOwner(#id)")
+    public void delete(@PathVariable Long id)
+            throws GarageProfileNotFoundException {
+        garageMgmtService.deleteGarageProfile(id);
+    }
 }

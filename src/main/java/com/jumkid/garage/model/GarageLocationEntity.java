@@ -4,12 +4,15 @@ import com.jumkid.share.model.GenericEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.locationtech.jts.geom.Geometry;
 
 import java.util.List;
 
 @Table(name = "garage_location")
 @Entity
+@Cacheable
+@org.hibernate.annotations.Cache(region="garageLocation", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @SuperBuilder @Data @AllArgsConstructor @NoArgsConstructor @EqualsAndHashCode(of = {"id"}, callSuper = true)
 public class GarageLocationEntity extends GenericEntity {
 
@@ -47,11 +50,11 @@ public class GarageLocationEntity extends GenericEntity {
     @Column(name = "geom", columnDefinition = "Geometry")
     private Geometry geom;
 
-    @ManyToOne(cascade = CascadeType.REFRESH)
+    @ManyToOne
     @JoinColumn(name = "garage_id")
     private GarageProfileEntity garageProfileEntity;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "garage_location_id")
+    @OneToMany(mappedBy = "garageLocationEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @org.hibernate.annotations.Cache(region="garageServiceTimeList", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private List<GarageServiceTimeEntity> garageServiceTimeEntityList;
 }

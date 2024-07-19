@@ -25,6 +25,7 @@ public interface GarageLocationMapper {
     GarageLocation entityToDTO(GarageLocationEntity entity, @Context MapperContext ctx);
 
     @Mapping(target = "geom", source = "dto.coordinate", qualifiedBy = CoordinateToGeomMapper.class)
+    @Mapping(target = "garageProfileEntity.id", source = "dto.garageProfileId")
     GarageLocationEntity dtoToEntity(GarageLocation dto, @MappingTarget GarageLocationEntity entity, @Context MapperContext ctx);
 
     default GarageLocationEntity dtoToEntity(GarageLocation dto, @Context MapperContext ctx) {

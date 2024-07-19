@@ -1,7 +1,11 @@
 test-data:
+
   clientId: "garage-mgmt"
+
   name: "garage management service test data"
+
   version: 0.0.1
+
   garageProfile:
     id: null
     displayName: "ABB"
@@ -20,4 +24,25 @@ test-data:
         coordinate:
           x: 10
           y: -10
-          m: 0
+        modifiedOn: "2024-07-01T20:00:00"
+    modifiedOn: "2024-07-01T20:00:00"
+
+  partialGarageProfiles:
+    - id: 1
+      displayName: "ABC"
+      legalName: "ABC Garage Shop"
+    - id: 1
+      displayName: "ABC"
+      garageLocations:
+        - id: null
+          addressLineOne: "3 Williams West"
+          addressLineTwo: "unit 8"
+          city: "phoenix"
+          province: "taxes"
+          country: "USA"
+          postalCode: "12345"
+          phoneNumber": "+1 564322344"
+          fax: "+1 564322345"
+          coordinate:
+            x: 20
+            y: 20
