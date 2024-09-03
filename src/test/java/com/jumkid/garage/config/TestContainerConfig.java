@@ -15,7 +15,7 @@ import java.util.Map;
 public class TestContainerConfig implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
     static final PostgreSQLContainer<?> dbContainer = new PostgreSQLContainer<>(
-            DockerImageName.parse("postgis/postgis:12-3.0").asCompatibleSubstituteFor("postgres")
+            DockerImageName.parse("postgis/postgis:16-3.4").asCompatibleSubstituteFor("postgres")
     ).withReuse(true);
 
     static {

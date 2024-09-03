@@ -11,7 +11,7 @@ import java.util.List;
 @Table(name = "garage_profile")
 @Entity
 @Cacheable
-@org.hibernate.annotations.Cache(region="garageProfile", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@org.hibernate.annotations.Cache(region = "garageProfile", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @SuperBuilder @Data @AllArgsConstructor @NoArgsConstructor @EqualsAndHashCode(of = {"id"}, callSuper = true)
 public class GarageProfileEntity extends GenericEntity{
 
