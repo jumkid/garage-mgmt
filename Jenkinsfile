@@ -4,7 +4,7 @@ pipeline {
     stage('Code Submit') {
       steps {
         git(url: 'https://github.com/jumkid/garage-mgmt.git', branch: 'main', credentialsId: 'chooli-github-pass')
-        sh 'ls -l'
+        sh 'find . | sed -e "s/[^-][^\\/]*\\// |/g" -e "s/|\\([^ ]\\)/|-\\1/"'
       }
     }
 
